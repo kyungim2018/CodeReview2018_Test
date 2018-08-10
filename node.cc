@@ -143,7 +143,7 @@ bool Node::ErasePreviousNode() {
    temp->pNext = this; 
   }
   
-  delete(DellNode)
+  delete(DellNode);
 
  }
   return true;
@@ -170,7 +170,7 @@ bool Node::EraseNextNode() {
    this->pNext = temp;
   }
 
-  delete(DellNode)
+  delete(DellNode); 
 
  }
  return true;
