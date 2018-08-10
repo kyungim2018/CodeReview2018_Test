@@ -109,5 +109,28 @@ bool Node::ErasePreviousNode() {
 }
 
 bool Node::EraseNextNode() {
+  Node *DellNode;
+ Node *temp;
+
+ DellNode = GetNextNode();
+
+ if (DellNode == nullptr)
   return false;
+ else
+ {
+  temp = DellNode->pNext;
+  if (temp == nullptr)
+  {
+   this->pNext = nullptr;
+  }
+  else
+  {
+   temp->pPriv = this;
+   this->pNext = temp;
+  }
+
+  delete(DellNode)
+
+ }
+ return true;
 }
