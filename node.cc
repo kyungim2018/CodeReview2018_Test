@@ -82,7 +82,30 @@ Node* Node::InsertNextNode(char data) {
 }
 
 bool Node::ErasePreviousNode() {
-  return false;
+  Node *DellNode; 
+ Node *temp; 
+
+ DellNode = GetPreviousNode();
+
+ if (DellNode == nullptr)
+  return false; 
+ else
+ {
+  temp = DellNode->pPriv; 
+  if (temp == nullptr)
+  {
+   this->pPriv = nullptr; 
+  }
+  else
+  {
+   this->pPriv = temp; 
+   temp->pNext = this; 
+  }
+  
+  delete(DellNode)
+
+ }
+  return true;
 }
 
 bool Node::EraseNextNode() {
