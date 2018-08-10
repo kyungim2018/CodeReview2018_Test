@@ -54,7 +54,31 @@ Node* Node::InsertPreviousNode(char data) {
 }
 
 Node* Node::InsertNextNode(char data) {
-  return nullptr;
+   Node *NewNode = new Node(data);
+
+ Node *temp;
+
+ temp = GetNextNode(); 
+
+ if (temp == nullptr)
+ {
+  //no next node
+  this->pNext = NewNode;
+  NewNode->pPriv = this; 
+
+ }
+ else
+ {
+  this->pNext = NewNode; 
+  temp->pPriv = NewNode; 
+
+  NewNode->pPriv = this;
+  NewNode->pNext = temp; 
+
+ }
+
+
+  return NewNode;
 }
 
 bool Node::ErasePreviousNode() {
