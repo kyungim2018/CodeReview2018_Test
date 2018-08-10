@@ -3,7 +3,12 @@
 #ifndef NODE_H_
 #define NODE_H_
 
+
 class Node {
+ private: 
+  Node* pNext; 
+  Node* pPriv;
+  int val;
  public:
   explicit Node(char data);
   char GetData();
