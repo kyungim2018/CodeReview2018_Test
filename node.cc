@@ -11,11 +11,23 @@ char Node::GetData() {
 }
 
 Node* Node::GetPreviousNode() {
+  //if there is no previous Node
+ if (this->pPriv == nullptr)
   return nullptr;
+ else
+  return this->pPriv; 
+
+ // return nullptr;
 }
 
 Node* Node::GetNextNode() {
+  //if there is no next Node
+ if (this->pNext == nullptr)
   return nullptr;
+ else
+  return this->pNext; 
+  
+ //return nullptr;
 }
 
 Node* Node::InsertPreviousNode(char data) {
