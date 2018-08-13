@@ -4,8 +4,8 @@
 
 Node::Node(char data) {
   this->val = data; 
- this->pPriv = nullptr; 
- this->pNext = nullptr; 
+  this->pPriv = nullptr; 
+  this->pNext = nullptr; 
 
   return;
 }
@@ -19,37 +19,6 @@ char Node::GetData() {
 }
 
 
-
-Node* Node::GetPreviousNode() {
-
-  //if there is no previous Node
-
- if (this->pPriv == nullptr)
-
-  return nullptr;
-
- else
-
-  return this->pPriv; 
-
-
-
- // return nullptr;
-
-}
-
-
-
-Node* Node::GetNextNode() {
-
-  //if there is no next Node
-
- if (this->pNe
-}
-
-char Node::GetData() {
-  return '\0';
-}
 
 Node* Node::GetPreviousNode() {
   //if there is no previous Node
