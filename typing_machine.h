@@ -10,8 +10,7 @@
 class TypingMachine {
  private: 
   Node* cursor; 
-  Node* head;
-  Node* tail; 
+ 
  public:
   TypingMachine();
   void HomeKey();
