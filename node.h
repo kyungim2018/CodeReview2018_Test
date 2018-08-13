@@ -8,7 +8,8 @@ class Node {
  private: 
   Node* pNext; 
   Node* pPriv;
-  int val;
+  char val;
+ 
  public:
   explicit Node(char data);
   char GetData();
