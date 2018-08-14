@@ -10,6 +10,7 @@
 class TypingMachine {
  private: 
   Node* cursor; 
+  int size; 
  
  public:
   TypingMachine();
