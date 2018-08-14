@@ -27,7 +27,6 @@ Node* Node::GetPreviousNode() {
  else
   return this->pPriv; 
 
- // return nullptr;
 }
 
 Node* Node::GetNextNode() {
@@ -37,16 +36,14 @@ Node* Node::GetNextNode() {
  else
   return this->pNext; 
   
- //return nullptr;
 }
 
 Node* Node::InsertPreviousNode(char data) {
   
-  Node *NewNode=new Node(data);
+ Node *NewNode=new Node(data);
 
- Node *temp; 
+ Node *temp = GetPreviousNode(); 
 
- temp = GetPreviousNode();
  if (temp == nullptr)
  {
   this->pPriv = NewNode;
@@ -64,11 +61,9 @@ Node* Node::InsertPreviousNode(char data) {
 }
 
 Node* Node::InsertNextNode(char data) {
-   Node *NewNode = new Node(data);
+ Node *NewNode = new Node(data);
 
- Node *temp;
-
- temp = GetNextNode(); 
+ Node *temp = GetNextNode(); 
 
  if (temp == nullptr)
  {
@@ -87,15 +82,14 @@ Node* Node::InsertNextNode(char data) {
 
  }
 
-
   return NewNode;
 }
 
 bool Node::ErasePreviousNode() {
-  Node *DellNode; 
+ 
  Node *temp; 
 
- DellNode = GetPreviousNode();
+ Node *DellNode = GetPreviousNode();
 
  if (DellNode == nullptr)
   return false; 
@@ -119,10 +113,10 @@ bool Node::ErasePreviousNode() {
 }
 
 bool Node::EraseNextNode() {
-  Node *DellNode;
+ 
  Node *temp;
 
- DellNode = GetNextNode();
+ Node *DellNode = GetNextNode();
 
  if (DellNode == nullptr)
   return false;
