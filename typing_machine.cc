@@ -2,90 +2,163 @@
 
 #include "typing_machine.h"
 
+
+
 TypingMachine::TypingMachine() {
-  cursor = nullptr; 
+	cursor = nullptr; 
+	size = 0; 
   return;
 }
 
 void TypingMachine::HomeKey() {
-  Node* temp; 
- Node* temp1; 
- 
- temp = cursor; 
- temp1 = nullptr; 
 
- do
- {
-  temp1 = temp->GetPreviousNode();
-  if (temp1 == nullptr)
-   cursor = temp; 
-  else
-      temp = temp1; 
- }
- while (temp1 != nullptr)
+	Node* temp; 
+	Node* temp1; 
+	
+	temp = cursor; 
+	temp1 = nullptr; 
+
+	
+
+	do
+	{
+		temp1 = temp->GetPreviousNode();
+		if (temp1 == nullptr)
+			cursor = temp; 
+		else
+		    temp = temp1; 
+	} while (temp1 != nullptr); 
+	
+	
+
   return;
 }
 
 void TypingMachine::EndKey() {
-  Node* temp;
- Node* temp1;
 
- temp = cursor;
- temp1 = nullptr;
 
- do
- {
-  temp1 = temp->GetNextNode();
-  if (temp1 == nullptr)
-   cursor = temp;
-  else
-   temp = temp1;
- } while (temp1 != nullptr)
+	Node* temp;
+	Node* temp1;
 
-  return;
-  return;
+	temp = cursor;
+	temp1 = nullptr;
+
+	do
+	{
+		temp1 = temp->GetNextNode();
+		if (temp1 == nullptr)
+			cursor = temp;
+		else
+			temp = temp1;
+	} while (temp1 != nullptr);
+
+   return ;
 }
 
 void TypingMachine::LeftKey() {
-  Node* temp; 
+	Node* temp; 
 
- temp = cursor->GetPreviousNode();
- if (temp != nullptr)
-  cursor = temp; 
+	temp = cursor->GetPreviousNode();
+	if (temp != nullptr)
+		cursor = temp; 
+
+
   return;
 }
 
 void TypingMachine::RightKey() {
-  Node* temp; 
+	Node* temp; 
 
- temp = cursor->GetNextNode(); 
- if (temp != nullptr)
-  cursor = temp; 
+	temp = cursor->GetNextNode(); 
+	if (temp != nullptr)
+		cursor = temp; 
     return;
-  return;
 }
 
 bool TypingMachine::TypeKey(char key) {
-  Node* temp; 
- if (key >= 0x20 && key <= 0x7E)
- {
-  temp = cursor->InsertNextNode(key); 
-  if (temp == nullptr)
-   return false; 
-  return true; 
- }
-  return false;
+
+	Node* temp; 
+	if (size == 100)
+		return false; 
+
+	if (key >= 0x20 && key <= 0x7E )
+	{
+		temp = cursor->InsertPreviousNode(key); 
+		if (temp == nullptr)
+			return false; 
+		size++; 
+		return true; 
+	}
+  return false; 
 }
 
 bool TypingMachine::EraseKey() {
-  Node* temp; 
+	
 
- if (cursor->ErasePreviousNode() == true)
-  return true; 
-  
- return false;
+	if (cursor->ErasePreviousNode() == true)
+	{
+		size--; 
+		return true; 
+	}
+		
+
+  return false;
 }
 
 std::string TypingMachine::Print(char separator) {
-  return "";
+
+
+	Node *temp; 
+	//TypingMachine* tm; 
+	string output; 
+	int i = 0; 
+	
+	//reserve cursor position 
+	temp = cursor; 
+
+	//move cursor to home position
+	this->HomeKey(); 
+
+	//if there is no data, then just put the separator and return output
+	if (cursor == nullptr)
+	{
+		//if separator is 0, do not display the separator
+		if (separator != 0)
+			output[i++] = separator; 
+		output[i++] = 0; 
+		return output; 
+	}
+		
+	
+	//we have data now
+
+	// copy the charactor until we meet the separator
+	do
+	{
+		//printf("%c", cursor->GetData()); 
+		
+		output[i++] = cursor->GetData(); 
+		cursor = cursor->GetNextNode(); 
+	} while (cursor != temp);
+
+
+	//separator printf
+	if (separator != 0)
+		output[i++] = separator; 
+
+	
+
+	//after separator, print all characters untill the end 
+
+	while (cursor != nullptr)
+	{
+		output[i++] = cursor->GetData();
+		cursor = cursor->GetNextNode();
+	}
+	
+	output[i++] = 0; 
+	cursor = temp; 
+
+	
+  return output;
 }
