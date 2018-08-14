@@ -111,7 +111,6 @@ std::string TypingMachine::Print(char separator) {
 	Node *temp; 
 	//TypingMachine* tm; 
 	string output; 
-	int i = 0; 
 	
 	//reserve cursor position 
 	temp = cursor; 
@@ -124,8 +123,8 @@ std::string TypingMachine::Print(char separator) {
 	{
 		//if separator is 0, do not display the separator
 		if (separator != 0)
-			output[i++] = separator; 
-		output[i++] = 0; 
+			output += separator; 
+		 
 		return output; 
 	}
 		
@@ -137,14 +136,14 @@ std::string TypingMachine::Print(char separator) {
 	{
 		//printf("%c", cursor->GetData()); 
 		
-		output[i++] = cursor->GetData(); 
+		output += cursor->GetData(); 
 		cursor = cursor->GetNextNode(); 
 	} while (cursor != temp);
 
 
 	//separator printf
 	if (separator != 0)
-		output[i++] = separator; 
+		output += separator; 
 
 	
 
@@ -152,11 +151,11 @@ std::string TypingMachine::Print(char separator) {
 
 	while (cursor != nullptr)
 	{
-		output[i++] = cursor->GetData();
+		output += cursor->GetData();
 		cursor = cursor->GetNextNode();
 	}
 	
-	output[i++] = 0; 
+	
 	cursor = temp; 
 
 	
