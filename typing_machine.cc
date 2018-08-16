@@ -5,31 +5,45 @@
 
 
 TypingMachine::TypingMachine() {
-	cursor = nullptr; 
+	
+	cursor = new Node('|');
 	size = 0; 
   return;
 }
 
 void TypingMachine::HomeKey() {
 
-	Node* temp; 
-	Node* temp1; 
+	Node* running_head; 
+	Node* head; 
 	
-	temp = cursor; 
-	temp1 = nullptr; 
-
 	
 
-	do
+	
+	
+
+	
+	if (cursor->GetPreviousNode() == nullptr)
+		return; 
+
+	//remove current cursor 
+	cursor = cursor->GetPreviousNode(); 
+	cursor->EraseNextNode(); 
+
+	running_head = cursor;
+	head = cursor;
+
+	
+	while (running_head != nullptr)
 	{
-		temp1 = temp->GetPreviousNode();
-		if (temp1 == nullptr)
-			cursor = temp; 
-		else
-		    temp = temp1; 
-	} while (temp1 != nullptr); 
-	
-	
+		head = running_head; 
+		running_head = running_head->GetPreviousNode(); 
+	}
+
+	//found the head , and put the cursor; 
+	cursor = head->InsertPreviousNode('|');
+	 
+
+			
 
   return;
 }
@@ -37,42 +51,64 @@ void TypingMachine::HomeKey() {
 void TypingMachine::EndKey() {
 
 
-	Node* temp;
-	Node* temp1;
+	Node* running_end;
+	Node* end;
 
-	temp = cursor;
-	temp1 = nullptr;
+	
+	
 
-	do
+	if (cursor->GetNextNode() == nullptr)
+		return; 
+
+	//remove current cursor 
+	cursor = cursor->GetNextNode();
+	cursor->ErasePreviousNode();
+
+	running_end = cursor;
+	end = cursor;
+
+
+	while (running_end != nullptr)
 	{
-		temp1 = temp->GetNextNode();
-		if (temp1 == nullptr)
-			cursor = temp;
-		else
-			temp = temp1;
-	} while (temp1 != nullptr);
+		end= running_end;
+		running_end = running_end->GetNextNode();
+	}
+
+	//found the tail , and put the data; 
+	cursor = end->InsertNextNode('|');
+	
 
    return ;
 }
 
 void TypingMachine::LeftKey() {
-	Node* temp; 
+	
+	if (cursor->GetPreviousNode() == nullptr)
+		return; 
 
-	temp = cursor->GetPreviousNode();
-	if (temp != nullptr)
-		cursor = temp; 
+	//want to remove cursor position
+	cursor = cursor->GetPreviousNode();
+	//originalcursor is removed
+	cursor->EraseNextNode();
+
+	cursor = cursor->InsertPreviousNode('|'); 
 
 
   return;
 }
 
 void TypingMachine::RightKey() {
-	Node* temp; 
+	
+	
+	if (cursor->GetNextNode() == nullptr)
+		return; 
 
-	temp = cursor->GetNextNode(); 
-	if (temp != nullptr)
-		cursor = temp; 
-    return;
+	cursor = cursor->GetNextNode(); 
+	cursor->ErasePreviousNode(); 
+     
+	cursor = cursor->InsertNextNode('|');
+
+	return;
 }
 
 bool TypingMachine::TypeKey(char key) {
@@ -108,18 +144,16 @@ bool TypingMachine::EraseKey() {
 std::string TypingMachine::Print(char separator) {
 
 
-	Node *temp; 
+	Node *position; 
+	Node *head; 
+	Node *running_head; 
 	//TypingMachine* tm; 
 	string output; 
+	char inChar; 
 	
-	//reserve cursor position 
-	temp = cursor; 
-
-	//move cursor to home position
-	this->HomeKey(); 
-
+	
 	//if there is no data, then just put the separator and return output
-	if (cursor == nullptr)
+	if (size == 0)
 	{
 		//if separator is 0, do not display the separator
 		if (separator != 0)
@@ -132,31 +166,39 @@ std::string TypingMachine::Print(char separator) {
 	//we have data now
 
 	// copy the charactor until we meet the separator
+	//reserve cursor position; 
+	position = cursor; 
+
+	running_head = cursor; 
+	head = cursor; 
+
+	//find the home position
+	while (running_head != nullptr)
+	{
+		head = running_head; 
+		running_head = running_head->GetPreviousNode(); 
+	}
+
+	
 	do
 	{
 		//printf("%c", cursor->GetData()); 
-		
-		output += cursor->GetData(); 
-		cursor = cursor->GetNextNode(); 
-	} while (cursor != temp);
+		inChar = head->GetData(); 
+		if (inChar != 0)
+		{
+			if (inChar == '|')
+				output += separator;
+			else
+				output += inChar; 
+		}
+	     	
+		head = head->GetNextNode(); 
+	} while (head != nullptr);
 
 
-	//separator printf
-	if (separator != 0)
-		output += separator; 
-
+			
 	
-
-	//after separator, print all characters untill the end 
-
-	while (cursor != nullptr)
-	{
-		output += cursor->GetData();
-		cursor = cursor->GetNextNode();
-	}
-	
-	
-	cursor = temp; 
+	cursor = position; 
 
 	
   return output;
